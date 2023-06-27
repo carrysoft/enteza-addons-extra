@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="enteza_form_view">
+            <field name="name">account.asset.form</field>
+	    <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset_management.account_asset_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='value_residual']" position="after">
+                    <field name="purchase_price"/>
+                    <field name="initial_units"/>
+                    <field name="unit_price"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

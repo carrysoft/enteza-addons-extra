@@ -1,0 +1,17 @@
+from odoo import models, fields, api
+
+class AccountAsset(models.Model):
+    _inherit = 'account.asset'
+
+    purchase_price = fields.Float(string='Precio de compra')
+    initial_units = fields.Float(string='Unidades compradas inicialmente')
+    unit_price = fields.Float(string='Precio unitario', compute='_compute_unit_price')
+
+    @api.depends('purchase_price', 'initial_units', 'depreciation_line_ids')
+    def _compute_unit_price(self):
+        for asset in self:
+            if asset.initial_units != 0:
+                total_depreciation = sum(asset.depreciation_line_ids.mapped('amount'))
+                remaining_value = asset.value_residual + total_depreciation
+                asset.unit_price = remaining_value / asset.initial_units
+
